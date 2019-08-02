@@ -1,6 +1,30 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios'
+
+
 
 const ProfileList = () => {
+
+    const [profiles, setProfiles] = useState([])
+
+
+    const getData = () => {
+        axios.get(`http://localhost:8000/profile/list`)
+        .then(res => {
+
+            setProfiles(res.data)
+
+            
+        })
+    }
+
+
+    useEffect(() => {
+        getData()
+     }, []);
+
+
+
     return (
         <div>
 
@@ -17,12 +41,21 @@ const ProfileList = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>image</td>
-                    <td>name</td>
-                    <td>@email</td>
-                </tr>
+                
+            {
+                        profiles.map((profile, index) => (
+                
+                            <tr>
+                                <th scope="row">{index}</th>
+                                <td><img style={{width: '50px', height: '50px'}} src={`images/${profile.image}`} alt=""/></td>
+                                <td>{profile.email}</td>
+                                <td>{profile.email}</td>
+                               
+                            </tr>
+                        ))
+                    }
+                        
+                
 
             </tbody>
             </table>

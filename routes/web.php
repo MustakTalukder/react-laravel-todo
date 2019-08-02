@@ -25,3 +25,4 @@ Route::put('category/update/{id}', 'Api\CategoryController@update');
 
 // Profile
 Route::post('profile/store', 'Api\ProfileController@store');
+Route::get('profile/list', 'Api\ProfileController@index');

@@ -16,7 +16,9 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        return Profile::all();
+
+
     }
 
     /**
@@ -38,10 +40,10 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
 
-        return $request->validate([
+        $request->validate([
             'name' => 'required|string|min:3',
             'email' => 'required|email',
-            'image' => 'required|image'
+            'image' => 'required'
         ]);
 
         if($request->get('image'))

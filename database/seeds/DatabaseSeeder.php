@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Profile;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,5 +13,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+
+        Profile::create([
+            'name' => 'mustak',
+            'email' => 'mustakhridoy@gmail.com',
+            'image' => ''
+        ]);
     }
 }
