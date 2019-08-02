@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Validator;
 use App\Profile;
 
 class ProfileController extends Controller
@@ -38,29 +38,26 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
 
+        return $request->validate([
+            'name' => 'required|string|min:3',
+            'email' => 'required|email',
+            'image' => 'required|image'
+        ]);
 
-        if($request->get('file'))
+        if($request->get('image'))
        {
-          $image = $request->get('file');
+          $image = $request->get('image');
           $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-          \Image::make($request->get('file'))->save(public_path('images/').$name);
+          \Image::make($request->get('image'))->save(public_path('images/').$name);
         }
 
+        Profile::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'image' => $name
+        ]);
 
-
-        $fileupload = new Fileupload();
-        $fileupload->filename=$name;
-        $fileupload->save();
-        return response()->json('Successfully added');
-
-
-        $profile = new Profile;
-
-        $profile->name = $request->name;
-        $profile->email = $request->email;
-        $profile->image = $imageName;
-
-        $profile->save();
+       // return redirect('');
     }
 
     /**
