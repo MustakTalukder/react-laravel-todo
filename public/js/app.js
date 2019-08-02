@@ -65675,6 +65675,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Home */ "./resources/js/components/Home.js");
 /* harmony import */ var _About__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./About */ "./resources/js/components/About.js");
 /* harmony import */ var _category_IndexCategory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./category/IndexCategory */ "./resources/js/components/category/IndexCategory.js");
+/* harmony import */ var _profile_IndexProfile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./profile/IndexProfile */ "./resources/js/components/profile/IndexProfile.js");
+
 
 
 
@@ -65717,7 +65719,12 @@ var Header = function Header() {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     className: "nav-link",
     to: "/about"
-  }, "About"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+  }, "About")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "nav-item"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    className: "nav-link",
+    to: "/profile"
+  }, "Profile"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/",
     exact: true,
     component: _Home__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -65729,6 +65736,10 @@ var Header = function Header() {
     path: "/category",
     exact: true,
     component: _category_IndexCategory__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/profile",
+    exact: true,
+    component: _profile_IndexProfile__WEBPACK_IMPORTED_MODULE_5__["default"]
   })));
 };
 
@@ -66123,6 +66134,228 @@ var ListCategories = function ListCategories() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ListCategories);
+
+/***/ }),
+
+/***/ "./resources/js/components/profile/CreateNewProfile.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/profile/CreateNewProfile.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var CreateNewProfile = function CreateNewProfile() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    name: '',
+    email: '',
+    image: ''
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      values = _useState2[0],
+      setValues = _useState2[1];
+
+  var changeHandler = function changeHandler(name) {
+    return function (e) {
+      console.log(name);
+
+      if (name === 'image') {
+        var files = e.target.files || e.dataTransfer.files;
+
+        if (!files.length) {
+          return;
+        }
+
+        createImage(files[0]);
+      } else {
+        setValues(_objectSpread({}, values, _defineProperty({}, name, e.target.value)));
+      }
+    };
+  };
+
+  var createImage = function createImage(file) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      setValues(_objectSpread({}, values, {
+        image: e.target.result
+      }));
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  var submitHandler = function submitHandler(e) {
+    e.preventDefault();
+    console.log("values =", values);
+    axios.post('http://localhost:8000/profile/store', values).then(function (res) {
+      return console.log(res.data);
+    });
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: submitHandler,
+    enctype: "multipart/form-data" // method="post"
+
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    "for": "name"
+  }, "Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    id: "name",
+    placeholder: "Enter Name",
+    name: "name",
+    onChange: changeHandler('name')
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    "for": "email"
+  }, "Email address"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "email",
+    className: "form-control",
+    id: "email",
+    placeholder: "Enter email",
+    name: "email",
+    onChange: changeHandler('email')
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    "for": "email"
+  }, "Image: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "file",
+    name: "image",
+    accept: "image/*",
+    onChange: changeHandler('image'),
+    id: "image"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    className: "btn btn-primary"
+  }, "Submit")));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (CreateNewProfile);
+
+/***/ }),
+
+/***/ "./resources/js/components/profile/IndexProfile.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/profile/IndexProfile.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _ProfileList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProfileList */ "./resources/js/components/profile/ProfileList.js");
+/* harmony import */ var _UpdateProfile__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UpdateProfile */ "./resources/js/components/profile/UpdateProfile.js");
+/* harmony import */ var _CreateNewProfile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateNewProfile */ "./resources/js/components/profile/CreateNewProfile.js");
+
+
+
+
+
+
+var IndexProfile = function IndexProfile() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/profile"
+  }, "Profile List"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/profile/create"
+  }, "Create Profile"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/profile/edit"
+  }, "Update Profile"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/profile",
+    exact: true,
+    component: _ProfileList__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/profile/create",
+    exact: true,
+    component: _CreateNewProfile__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/profile/edit",
+    exact: true,
+    component: _UpdateProfile__WEBPACK_IMPORTED_MODULE_3__["default"]
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (IndexProfile);
+
+/***/ }),
+
+/***/ "./resources/js/components/profile/ProfileList.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/profile/ProfileList.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var ProfileList = function ProfileList() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Profile List"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+    "class": "table"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+    scope: "col"
+  }, "#"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+    scope: "col"
+  }, "Image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+    scope: "col"
+  }, "name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+    scope: "col"
+  }, "email"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+    scope: "row"
+  }, "1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "@email")))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ProfileList);
+
+/***/ }),
+
+/***/ "./resources/js/components/profile/UpdateProfile.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/profile/UpdateProfile.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var UpdateProfile = function UpdateProfile() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Profile Update");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (UpdateProfile);
 
 /***/ }),
 

@@ -22,3 +22,6 @@ Route::delete('category/delete/{id}', 'Api\CategoryController@destroy');
 Route::get('category/edit/{id}', 'Api\CategoryController@edit');
 
 Route::put('category/update/{id}', 'Api\CategoryController@update');
+
+// Profile
+Route::post('profile/store', 'Api\ProfileController@store');

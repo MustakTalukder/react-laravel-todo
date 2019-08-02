@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 
 import Home from './Home'
 import About from './About';
-import IndexCategory from './category/IndexCategory'
+import IndexCategory from './category/IndexCategory';
+import IndexProfile from './profile/IndexProfile';
 
 const Header = () => {
     return (
@@ -30,6 +31,10 @@ const Header = () => {
                                 <Link className="nav-link" to="/about">About</Link>
                             </li>
 
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/profile">Profile</Link>
+                            </li>
+
                     
                         </ul>
                     </div>
@@ -40,6 +45,7 @@ const Header = () => {
                 <Route path="/" exact component={Home} />
                 <Route path="/about" exact component={About} />
                 <Route path="/category" exact component={IndexCategory} />
+                <Route path="/profile" exact component={IndexProfile} />
                
             </div>
             
